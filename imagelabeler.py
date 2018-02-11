@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from PIL import Image, ImageDraw, ImageFont
 import glob
+import datetime
 
 class LabeledImage():
 
@@ -60,7 +61,9 @@ class LabeledImage():
 
     def add_date_label(self, position):
         #datetime functions here to make date nice format
-        self.add_label(self.imgdate, position)
+        original_date = datetime.datetime.strptime(self.imgdate,
+                                                   "%Y:%m:%d %H:%M:%S")
+        self.add_label(original_date.strftime("%b %d, %Y"), position)
 
     def get(self):
         merged_image = Image.alpha_composite(self.img.convert('RGBA'),

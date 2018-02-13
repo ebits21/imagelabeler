@@ -12,7 +12,7 @@ class LabeledImage():
                        'top left':False,
                        'top right':False,
                        'bottom right':False,
-                       'bottom left':False,
+                       'bottom left':False
                       }
         #exif only available for non-copied or converted image
         self.imgdate = img._getexif()[36867]
@@ -42,10 +42,11 @@ class LabeledImage():
         text_width, text_height = self.label_draw.textsize(label, font=font)
         image_width, image_height = self.img.size
 
-        if self.labels[position] == True:
-            print('Label already exists in this position')
+        if self.labels[position] is not False:
+            print('Label' + self.labels[position] +
+                  'already exists in the ' + position + ' position')
         else:
-            self.labels[position] = True
+            self.labels[position] = label
             if position == 'top left':
                  self._place_label(padding,padding,label,font)
             elif position == 'bottom left':
@@ -58,6 +59,7 @@ class LabeledImage():
                  self._place_label(image_width-(text_width+padding),
                                     image_height-(text_height+padding),
                                     label,font)
+        #print (self.labels)
 
     def add_date_label(self, position):
         #datetime functions here to make date nice format
@@ -86,6 +88,7 @@ if __name__=='__main__':
         i.add_date_label('top left')
         i.clear_draw_surface()
         i.add_label('I Love Lily Popper!','bottom left')
+        i.add_label('I Love you babe', 'bottom left')
         i.add_date_label('bottom right')
         i.get().resize((640,480)).show()
 

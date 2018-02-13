@@ -1,10 +1,10 @@
 imagelabeler
 ============
-A Python class that adds labels, such as original date stamps, to .jpg images.  Makes use of the **Pillow image manipulation library**.
+A Python 3.5.2 class that adds labels, such as original date stamps, to .jpg images.  Makes use of the [**Pillow 5.0.0 image manipulation library**](https://python-pillow.org/).
 
 *Designed to be used in a clinical health setting for automatically datestamping otoscopic pictures.*
 
-## Basic behaviour:
+### Basic behaviour:
 
 * If used as a `__main__` program:
 
@@ -21,10 +21,11 @@ A Python class that adds labels, such as original date stamps, to .jpg images.  
     * LabeledImage.add_date_label(position) automatically adds date the image was created.
         * Only works with original .jpgs with required exif data.
        
-## To Be Added:
+### To Be Added:
 
 * **Image hashing functions** to keep track whether or not an image has been labeled before.
 * Find way to **preserve Exif data** and resize images.
 * Functions to move original images to an archive (keep 50 images).
 * **Error checking** and handling and optimizations.
+* Re-format code to PEP-8 standards, and add docstrings and other documentation.
 * **Front end GUI** (PyQT 5)

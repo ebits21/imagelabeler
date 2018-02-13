@@ -8,7 +8,7 @@ A Python 3.5.2 class that adds labels, such as original date stamps, to .jpg ima
 
 * If used as a `__main__` program:
 
-    * Searches the images/ directory for .jpg images and loads pillow image objects.
+    * Searches the `images/` directory for .jpg images and loads pillow image objects.
     * Creates LabeledImage objects for the images.
         * Labels images with text or original date from Exif data.
         * Returns a merged Pillow Image object.

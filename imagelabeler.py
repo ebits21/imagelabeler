@@ -2,23 +2,25 @@
 
 """Add date or text labels to images.
 
-This module takes .jpg images in the current directory and adds text or date labels to them.  Only images that have not been labeled before may be labeled.
+This module takes .jpg images in the current directory and adds text or date
+labels to them.  Only images that have not been labeled before may be labeled.
 
 The module uses the pillow (PIL) image library for image handling. The hashlib
 module is used to create a fingerprint for each labeled image. If the
-fingerprint has been seen before the module will not label the image. The pickle
-module is used to save a list that acts as a database of previously seen hashes.
+fingerprint has been seen before the module will not label the image. The
+pickle module is used to save a list that acts as a database of previously
+seen hashes.
 
 Todo:
     * Have module create labeledImages and originalImages folders and move
       processed images to the correct location.
 """
 
-from PIL import Image, ImageDraw, ImageFont
 import glob
 import datetime
 import hashlib
 import pickle
+from PIL import Image, ImageDraw, ImageFont
 
 class LabeledImage():
     """Create a labeled image object from a given image.
@@ -58,8 +60,7 @@ class LabeledImage():
         self.img = img
         self.label_layer, self.label_draw = self._create_draw_surface()
         #Labels can be added to 1 of 4 image corners.
-        self.labels = {
-                       'top left':False,
+        self.labels = {'top left':False,
                        'top right':False,
                        'bottom right':False,
                        'bottom left':False
@@ -75,17 +76,17 @@ class LabeledImage():
 
         """
 
-        new_image = Image.new('RGBA', self.img.size, (255,255,255,0))
+        new_image = Image.new('RGBA', self.img.size, (255, 255, 255, 0))
         return new_image, ImageDraw.Draw(new_image)
 
     def clear_draw_surface(self):
         """Clear all labels and create new drawing surfaces."""
 
         for position in self.labels:
-            self.labels[position]=False
+            self.labels[position] = False
         self.label_layer, self.label_draw = self._create_draw_surface()
 
-    def _place_label(self,x,y,label,font):
+    def _place_label(self, x, y, label, font):
         """Draw background box and text label on image.
 
         Args:
@@ -95,15 +96,15 @@ class LabeledImage():
 
         """
 
-        text_color = (255,255,255,200)
-        background_color = (0,0,0,200)
+        text_color = (255, 255, 255, 200)
+        background_color = (0, 0, 0, 200)
 
         #Calculate the width and height of the label.
-        w,h = self.label_draw.textsize(label, font=font)
+        w, h = self.label_draw.textsize(label, font=font)
 
         #Draw background box the size of the text and then draw the text.
-        self.label_draw.rectangle([x,y,x+w,y+h],fill=background_color)
-        self.label_draw.text((x,y),label,font=font, fill=text_color)
+        self.label_draw.rectangle([x, y, x+w, y+h], fill=background_color)
+        self.label_draw.text((x, y), label, font=font, fill=text_color)
 
     def add_label(self, label, position):
         """Draw text label to given position.
@@ -135,17 +136,17 @@ class LabeledImage():
         else:
             self.labels[position] = label
             if position == 'top left':
-                 self._place_label(padding,padding,label,font)
+                self._place_label(padding, padding, label, font)
             elif position == 'bottom left':
-                 self._place_label(padding,image_height-(text_height+padding),
-                                    label,font)
+                self._place_label(padding, image_height-(text_height+padding),
+                                  label, font)
             elif position == 'top right':
-                 self._place_label(image_width-(text_width+padding),padding,
-                                    label,font)
+                self._place_label(image_width-(text_width+padding), padding,
+                                  label, font)
             elif position == 'bottom right':
-                  self._place_label(image_width-(text_width+padding),
-                                    image_height-(text_height+padding),
-                                     label,font)
+                self._place_label(image_width-(text_width+padding),
+                                  image_height-(text_height+padding),
+                                  label, font)
 
     def add_date_label(self, position):
         """Add a date label to the drawing surface.
@@ -185,7 +186,7 @@ def get_hash_db(filename):
     """
 
     try:
-        with open (filename, 'rb') as f:
+        with open(filename, 'rb') as f:
             return list(pickle.load(f))
     except:
         return []
@@ -198,7 +199,7 @@ def save_hash_db(filename, hashes):
         hashes(list): list of image hashes to save.
 
     """
-    with open (filename, 'wb') as f:
+    with open(filename, 'wb') as f:
         pickle.dump(set(hashes),f)
 
 def remove_labeled_images(images, hash_db, file_list):
@@ -236,7 +237,7 @@ def remove_labeled_images(images, hash_db, file_list):
 
     return unlabeled_images, new_hashes, new_file_list
 
-if __name__=='__main__':
+if __name__ == '__main__':
     #Load name of all jpegs in images folder
     originals = [i for i in glob.glob('images/*.[jJ][pP][gG]')]
 
@@ -246,8 +247,8 @@ if __name__=='__main__':
     #Load the hash database and remove images that have been labeled before.
     hash_db = get_hash_db('hashes.py')
     images, new_hashes, originals = remove_labeled_images(images,
-                                                              hash_db,
-                                                              originals)
+                                                          hash_db,
+                                                          originals)
 
     # Create image labeler objects for each image
     image_labelers = [LabeledImage(image) for image in images]

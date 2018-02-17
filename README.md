@@ -23,7 +23,7 @@ A Python 3.5.2 class that adds labels, such as original date stamps, to .jpg ima
        
 ### To Be Added:
 
-* **Image hashing functions** to keep track whether or not an image has been labeled before.
+* ~~**Image hashing functions** to keep track whether or not an image has been labeled before.~~
 * Find way to **preserve Exif data** and resize images.
 * Functions to move original images to an archive (keep 50 images).
 * **Error checking** and handling and optimizations.

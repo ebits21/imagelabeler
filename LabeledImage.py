@@ -143,7 +143,7 @@ class LabeledImage():
         padding = 20
         label = ' '+label+' '
 
-        font = ImageFont.truetype('Roboto-Regular.ttf', 100)
+        font = ImageFont.truetype('Roboto-Regular.ttf', 12)
 
         #Calculate font and image dimensions for placing the label.
         text_width, text_height = self.label_draw.textsize(label, font=font)

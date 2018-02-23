@@ -65,7 +65,7 @@ def save_labeled_images(images, filenames):
             print('Error making the labeled images folder')
     for i, img in enumerate(images):
         try:
-            img.save(os.path.join('labeled images',
+            img.convert('RGB').save(os.path.join('labeled images',
                                   os.path.basename(filenames[i])))
             print('labeled image saved')
         except:
